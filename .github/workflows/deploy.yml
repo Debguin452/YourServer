@@ -1,0 +1,34 @@
+name: Deploy to Cloudflare Workers
+
+# Deploys automatically on every push to main — including a commit made
+# from the GitHub web UI on a phone. No local install, no Docker, no
+# credit card anywhere in this pipeline (public repos get unlimited
+# free GitHub Actions minutes).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          secrets: |
+            API_KEY
+            WEBHOOK_SECRET
+        env:
+          # Optional secrets forwarded into the Worker. Leave the repo
+          # secrets unset and these simply aren't set on the Worker —
+          # nothing breaks, the matching feature just stays unused.
+          API_KEY: ${{ secrets.APP_API_KEY }}
+          WEBHOOK_SECRET: ${{ secrets.APP_WEBHOOK_SECRET }}

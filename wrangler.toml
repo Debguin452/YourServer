@@ -1,0 +1,66 @@
+# yourserver — Cloudflare Workers configuration.
+# Signing up and deploying on the free plan needs no credit card —
+# only an email address. See README for the full explanation.
+
+name = "yourserver"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+APP_NAME = "yourserver"
+
+# ---------------------------------------------------------------------------
+# Workers KV — free key-value storage. Powers /store, /auth sessions,
+# the example counter, rate limiting and the webhook log.
+# Create it once with:
+#   npx wrangler kv namespace create APP_KV
+# then paste the "id" it prints below and uncomment this block.
+# ---------------------------------------------------------------------------
+# [[kv_namespaces]]
+# binding = "APP_KV"
+# id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# ---------------------------------------------------------------------------
+# D1 — a free real SQL (SQLite) database. Powers /notes.
+# Create it once with:
+#   npx wrangler d1 create yourserver-db
+# then paste the "database_id" it prints below, uncomment, and apply
+# schema.sql (see README).
+# ---------------------------------------------------------------------------
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "yourserver-db"
+# database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# ---------------------------------------------------------------------------
+# R2 — free object storage (zero egress fees). Powers /files.
+# Create it once with:
+#   npx wrangler r2 bucket create yourserver-files
+# then uncomment this block.
+# ---------------------------------------------------------------------------
+# [[r2_buckets]]
+# binding = "FILES"
+# bucket_name = "yourserver-files"
+
+# ---------------------------------------------------------------------------
+# Secrets (API keys, webhook secrets, passwords) never go in this file
+# or in git. Set them with:
+#   npx wrangler secret put API_KEY
+#   npx wrangler secret put WEBHOOK_SECRET
+# The GitHub Actions deploy workflow can also set them from repo
+# secrets — see .github/workflows/deploy.yml.
+# ---------------------------------------------------------------------------
+
+# Cron Triggers need the paid Workers plan. On the free plan, use the
+# GitHub Actions scheduled workflow instead — see
+# .github/workflows/scheduled-job.yml.
+# [triggers]
+# crons = ["*/15 * * * *"]
+
+# ---------------------------------------------------------------------------
+# Multiple environments (optional). Deploy a separate "staging" Worker
+# with `wrangler deploy --env staging` to test changes before they hit
+# your real URL. Give it its own KV/D1/R2 bindings the same way as above.
+# ---------------------------------------------------------------------------
+# [env.staging]
+# name = "yourserver-staging"

@@ -1,0 +1,19 @@
+# Standalone example: the SAME Cloudflare free tier, no credit card,
+# but written in Python instead of JavaScript (Cloudflare's Python
+# Workers runtime, generally available since September 2026 — it runs
+# Python via Pyodide inside the same workerd runtime as JS Workers).
+#
+# This is a separate, self-contained example — it deploys as its own
+# Worker, not merged into the main src/ project. Use it as the
+# starting point if you'd rather write your routes in Python than
+# JavaScript. Deploy with:
+#   cd examples/python-worker && npx wrangler deploy
+#
+# Known limitation: Python's `threading` and `multiprocessing` modules
+# don't work in this WebAssembly environment — everything else in the
+# standard library generally does.
+
+name = "yourserver-python"
+main = "src/entry.py"
+compatibility_date = "2026-01-01"
+compatibility_flags = ["python_workers"]

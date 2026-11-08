@@ -1,0 +1,16 @@
+{
+  "name": "yourserver",
+  "version": "1.0.0",
+  "description": "A free, always-on, fully customizable server built on Cloudflare Workers. No credit card, no sleeping, deployed by GitHub Actions.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

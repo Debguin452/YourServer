@@ -1,0 +1,28 @@
+name: Scheduled job (free alternative to Cron Triggers)
+
+# Cloudflare's own Cron Triggers need the paid Workers plan. This
+# workflow is the free substitute: GitHub Actions calls your Worker on
+# a timer, and the Worker does whatever work you want inside that
+# request (write to KV, poll an API, send a notification...).
+#
+# Your Worker itself never sleeps — this is for running work ON A
+# SCHEDULE, not for "keeping something awake" (it's already always on).
+#
+# Cron below is UTC and "best effort" timing (can run a few minutes
+# late under load) — fine for routine jobs, not for anything needing
+# second-level precision.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # every 15 minutes — edit to taste
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the scheduled endpoint
+        run: |
+          curl -fsS "${{ secrets.WORKER_URL }}/health" \
+            -H "User-Agent: scheduled-job-github-actions" \
+            --max-time 20

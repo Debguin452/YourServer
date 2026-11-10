@@ -26,7 +26,7 @@ id = "71f4bd9fb7734c4d945ce99912faab60"
 # then paste the "database_id" it prints below, uncomment, and apply
 # schema.sql (see README).
 [[d1_databases]]
-binding = "yourserver-db"
+binding = "DB"
 database_id = "62a38828-534b-4105-b897-640dc47eced3"
 
 # ---------------------------------------------------------------------------

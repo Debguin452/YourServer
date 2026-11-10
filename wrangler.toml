@@ -15,22 +15,19 @@ APP_NAME = "yourserver"
 # Create it once with:
 #   npx wrangler kv namespace create APP_KV
 # then paste the "id" it prints below and uncomment this block.
-# ---------------------------------------------------------------------------
-# [[kv_namespaces]]
-# binding = "APP_KV"
-# id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+[[kv_namespaces]]
+binding = "APP_KV"
+id = "71f4bd9fb7734c4d945ce99912faab60"
 
-# ---------------------------------------------------------------------------
+
 # D1 — a free real SQL (SQLite) database. Powers /notes.
 # Create it once with:
 #   npx wrangler d1 create yourserver-db
 # then paste the "database_id" it prints below, uncomment, and apply
 # schema.sql (see README).
-# ---------------------------------------------------------------------------
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "yourserver-db"
-# database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+[[d1_databases]]
+binding = "yourserver-db"
+database_id = "62a38828-534b-4105-b897-640dc47eced3"
 
 # ---------------------------------------------------------------------------
 # R2 — free object storage (zero egress fees). Powers /files.
